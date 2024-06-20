@@ -1,22 +1,23 @@
-// sequelize format model 
+// sequelize brewery model
 
-const sequelize = require("./db/sequelize");
+const sequelize = require("../../db/sequelize");
+
 
 const { DataTypes } = require("sequelize");
 
-const Format = sequelize.define("Format", {
+const Brewery = sequelize.define("Brewery", {
     name: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    volume: {
-        type: DataTypes.FLOAT,
+    city : {
+        type: DataTypes.STRING,
         allowNull: false,
     },
-    unit: {
+    address : {
         type: DataTypes.STRING,
         allowNull: false,
     }
     });
 
-module.exports = Format;
+module.exports = Brewery;

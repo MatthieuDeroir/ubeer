@@ -1,64 +1,63 @@
-// mongoose beer model
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = require('../../db/sequelize');
 
-const mongoose = require("mongoose");
-
-const beerSchema = new mongoose.Schema({
-    id : {
-        type: Number,
-        required: true
+const Beer = sequelize.define('Beer', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
     },
-    name : {
-        type: String,
-        required: true
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
     },
-    category : {
-        type: String,
-        required: true
+    style: {
+        type: DataTypes.STRING,
+        allowNull: false,
     },
-    volume : {
-        type: Number,
-        required: true
+    type: {
+        type: DataTypes.STRING,
+        allowNull: false,
     },
-    abv : {
-        type: Number,
-        required: true
-    },
-    ibu : {
-        type: Number,
-        required: true
-    },
-    brewery : {
-        name : {
-            type: String,
-            required: true
-        },
-        city : {
-            type: String,
-            required: true
-        },
-        address : {
-            type: String,
-            required: true
+    abv: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        validate: {
+            min: 0,
+            max: 100
         }
     },
-    formats : [
-        {
-            name : {
-                type: String,
-                required: true
-            },
-            volume : {
-                type: Number,
-                required: true
-            },
-            unit : {
-                type: String,
-                required: true
-            }
+    ibu: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            min: 0,
+            max: 100
         }
-    ]
+    },
+    price : {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        validate: {
+            min: 0,
+            max: 1000000
+        }
+    },
+    description: {
+        type: DataTypes.STRING,
+    },
+    imageUrl: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    breweryId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    formatId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
 });
-
-const Beer = mongoose.model("Beer", beerSchema);
 
 module.exports = Beer;

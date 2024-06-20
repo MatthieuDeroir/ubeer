@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,9 +15,22 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-jwt": "^6.1.2",
+    "express-session": "^1.18.0",
+    "jwks-rsa": "^3.1.0",
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.2",
+    "mysql2": "^3.10.1",
+    "nodemon": "^3.1.0",
+    "passport": "^0.7.0",
+    "passport-oauth2": "^1.8.0",
     "sequelize": "^6.37.3",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "swagger": "^0.7.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
   }
 }

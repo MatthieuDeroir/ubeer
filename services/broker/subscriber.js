@@ -1,21 +1,28 @@
 const amqp = require('amqplib');
-const { set } = require('mongoose');
+require("dotenv").config();
+const { handleCommand } = require('./commandHandlers');
+const { connectMongo } = require('../../db/mongoDBConnect');
 
-async function startConsumer() {
-    const conn = await amqp.connect('amqp://localhost');
-    const channel = await conn.createChannel();
-    const queue = 'hello';
+async function startWorker() {
+    try {
+        await connectMongo(); // Ensure MongoDB is connected
+        const conn = await amqp.connect(process.env.RABBITMQ_URL || 'amqp://localhost');
+        const channel = await conn.createChannel();
+        const queue = "beerQueue";
 
-    await channel.assertQueue(queue, { durable: false });
-    console.log("Waiting for messages in %s. To exit press CTRL+C", queue);
+        await channel.assertQueue(queue, { durable: true });
+        console.log("Worker is waiting for commands");
 
-    channel.consume(queue, function(msg) {
+        channel.consume(queue, async function(msg) {
             if (msg !== null) {
-                console.log("Received:", msg.content.toString());
+                const command = msg.content.toString();
+                await handleCommand(command);
                 channel.ack(msg);
             }
-        
-    });
+        });
+    } catch (error) {
+        console.error("Failed to start worker:", error);
+    }
 }
 
-startConsumer().catch(console.error);
+module.exports = { startWorker };

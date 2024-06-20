@@ -1,0 +1,558 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "My API",
+    "version": "1.0.0",
+    "description": "My API Description"
+  },
+  "paths": {
+    "/api/beer/get": {
+      "get": {
+        "summary": "Get All Beers",
+        "tags": [
+          "Beer"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Beer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/beer/get/{id}": {
+      "get": {
+        "summary": "Get a Beer by ID",
+        "tags": [
+          "Beer"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the beer to retrieve.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Beer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/beer/post": {
+      "post": {
+        "summary": "Create a new Beer",
+        "tags": [
+          "Beer"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Beer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Beer created successfully."
+          }
+        }
+      }
+    },
+    "/api/beer/put/{id}": {
+      "put": {
+        "summary": "Update a Beer",
+        "tags": [
+          "Beer"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the beer to update.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Beer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Beer updated successfully."
+          }
+        }
+      }
+    },
+    "/api/beer/delete/{id}": {
+      "delete": {
+        "summary": "Delete a Beer",
+        "tags": [
+          "Beer"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the beer to delete.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Beer deleted successfully."
+          }
+        }
+      }
+    },
+    "/api/brewery/get": {
+      "get": {
+        "summary": "Get All Breweries",
+        "tags": [
+          "Brewery"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Brewery"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/brewery/get/{id}": {
+      "get": {
+        "summary": "Get a Brewery by ID",
+        "tags": [
+          "Brewery"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the brewery to retrieve.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Brewery"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/brewery/post": {
+      "post": {
+        "summary": "Create a new Brewery",
+        "tags": [
+          "Brewery"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Brewery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Brewery created successfully."
+          }
+        }
+      }
+    },
+    "/api/brewery/put/{id}": {
+      "put": {
+        "summary": "Update a Brewery",
+        "tags": [
+          "Brewery"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the brewery to update.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Brewery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Brewery updated successfully."
+          }
+        }
+      }
+    },
+    "/api/brewery/delete/{id}": {
+      "delete": {
+        "summary": "Delete a Brewery",
+        "tags": [
+          "Brewery"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the brewery to delete.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Brewery deleted successfully."
+          }
+        }
+      }
+    },
+    "/api/format/get": {
+      "get": {
+        "summary": "Get All Formats",
+        "tags": [
+          "Format"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Format"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/format/get/{id}": {
+      "get": {
+        "summary": "Get a Format by ID",
+        "tags": [
+          "Format"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the format to retrieve.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Format"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/format/post": {
+      "post": {
+        "summary": "Create a new Format",
+        "tags": [
+          "Format"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Format"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Format created successfully."
+          }
+        }
+      }
+    },
+    "/api/format/put/{id}": {
+      "put": {
+        "summary": "Update a Format",
+        "tags": [
+          "Format"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the format to update.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Format"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Format updated successfully."
+          }
+        }
+      }
+    },
+    "/api/format/delete/{id}": {
+      "delete": {
+        "summary": "Delete a Format",
+        "tags": [
+          "Format"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the format to delete.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Format deleted successfully."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Beer": {
+        "type": "object",
+        "required": [
+          "name",
+          "style",
+          "type",
+          "abv",
+          "ibu",
+          "breweryId",
+          "formatId"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The auto-generated id of the beer"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the beer"
+          },
+          "style": {
+            "type": "string",
+            "description": "The style of the beer"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the beer"
+          },
+          "abv": {
+            "type": "number",
+            "format": "float",
+            "description": "The alcohol by volume (ABV) of the beer"
+          },
+          "ibu": {
+            "type": "integer",
+            "description": "The International Bitterness Units (IBU) of the beer"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the beer"
+          },
+          "breweryId": {
+            "type": "integer",
+            "description": "The ID of the brewery"
+          },
+          "formatId": {
+            "type": "integer",
+            "description": "The ID of the format"
+          }
+        },
+        "example": {
+          "name": "Lager",
+          "style": "Pale Lager",
+          "type": "Beer",
+          "abv": 5,
+          "ibu": 20,
+          "description": "A smooth and refreshing lager",
+          "imageUrl": "https://dummyimage.com/200x400/000/fff",
+          "breweryId": 1,
+          "formatId": 1
+        }
+      },
+      "Brewery": {
+        "type": "object",
+        "required": [
+          "name",
+          "city",
+          "address"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The auto-generated id of the brewery"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the brewery"
+          },
+          "city": {
+            "type": "string",
+            "description": "The city where the brewery is located"
+          },
+          "address": {
+            "type": "string",
+            "description": "The address of the brewery"
+          }
+        },
+        "example": {
+          "name": "Happy Brewing Co.",
+          "city": "Portland",
+          "address": "123 Beer Lane"
+        }
+      },
+      "Format": {
+        "type": "object",
+        "required": [
+          "name",
+          "volume",
+          "unit"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The auto-generated id of the format"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the format"
+          },
+          "volume": {
+            "type": "number",
+            "format": "float",
+            "description": "The volume of the format"
+          },
+          "unit": {
+            "type": "string",
+            "description": "The unit of the volume (e.g., ml, oz)"
+          }
+        },
+        "example": {
+          "name": "Bottle",
+          "volume": 500,
+          "unit": "ml"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Beer",
+      "description": "Beer operations"
+    },
+    {
+      "name": "Brewery",
+      "description": "Brewery operations"
+    },
+    {
+      "name": "Format",
+      "description": "Format operations"
+    }
+  ]
+}

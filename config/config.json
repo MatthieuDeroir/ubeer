@@ -1,0 +1,26 @@
+{
+  "development": {
+    "url": "mysql://ugfs4olepte6fizj:eSX1RQOnrXwDjXvg7Aox@brztsbwmlfk2p7xqoyvt-mysql.services.clever-cloud.com:3306/brztsbwmlfk2p7xqoyvt",
+    "dialect": "mysql",
+    "logging": false,
+    "dialectOptions": {
+      "connectTimeout": 60000
+    }
+  },
+  "test": {
+    "url": "mysql://ugfs4olepte6fizj:eSX1RQOnrXwDjXvg7Aox@brztsbwmlfk2p7xqoyvt-mysql.services.clever-cloud.com:3306/brztsbwmlfk2p7xqoyvt",
+    "dialect": "mysql",
+    "logging": false,
+    "dialectOptions": {
+      "connectTimeout": 60000
+    }
+  },
+  "production": {
+    "url": "mysql://ugfs4olepte6fizj:eSX1RQOnrXwDjXvg7Aox@brztsbwmlfk2p7xqoyvt-mysql.services.clever-cloud.com:3306/brztsbwmlfk2p7xqoyvt",
+    "dialect": "mysql",
+    "logging": false,
+    "dialectOptions": {
+      "connectTimeout": 60000
+    }
+  }
+}
