@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Controller = require('../controllers/');
-const { ensureAdmin } = require('../middlewares/admin');
+const checkJwt = require('../middlewares/auth'); // Import the JWT middleware
+
 
 /**
  * @swagger
@@ -124,7 +125,7 @@ router.get('/get/:id', Controller.Beer.getBeerById);
  *       201:
  *         description: Beer created successfully.
  */
-router.post('/post', Controller.Beer.createBeer);
+router.post('/post', checkJwt, Controller.Beer.createBeer);
 
 /**
  * @swagger
@@ -149,7 +150,7 @@ router.post('/post', Controller.Beer.createBeer);
  *       200:
  *         description: Beer updated successfully.
  */
-router.put('/put/:id', Controller.Beer.updateBeer);
+router.put('/put/:id', checkJwt, Controller.Beer.updateBeer);
 
 /**
  * @swagger
@@ -168,6 +169,6 @@ router.put('/put/:id', Controller.Beer.updateBeer);
  *       200:
  *         description: Beer deleted successfully.
  */
-router.delete('/delete/:id', Controller.Beer.deleteBeer);
+router.delete('/delete/:id', checkJwt, Controller.Beer.deleteBeer);
 
 module.exports = router;

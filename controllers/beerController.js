@@ -19,12 +19,10 @@ const beerController = {
         try {
         
             const beer = await beerService.createBeer(req.body);
-            
             publishMessage(beer.toJSON());
             res.status(201).json(beer);
         } catch (error) {
-            console.log(req.body)
-            console.log(error)
+            
             res.status(400).json({ error: error.message });
         }
     },

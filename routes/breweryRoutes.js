@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Controller = require('../controllers/');
-const { ensureAdmin } = require('../middlewares/admin');
+const checkJwt  = require('../middlewares/admin');
 
 /**
  * @swagger
@@ -97,7 +97,7 @@ router.get('/get/:id', Controller.Brewery.getBreweryById);
  *       201:
  *         description: Brewery created successfully.
  */
-router.post('/post', Controller.Brewery.createBrewery);
+router.post('/post', checkJwt, Controller.Brewery.createBrewery);
 
 /**
  * @swagger
@@ -122,7 +122,7 @@ router.post('/post', Controller.Brewery.createBrewery);
  *       200:
  *         description: Brewery updated successfully.
  */
-router.put('/put/:id', Controller.Brewery.updateBrewery);
+router.put('/put/:id', checkJwt, Controller.Brewery.updateBrewery);
 
 /**
  * @swagger
@@ -141,6 +141,6 @@ router.put('/put/:id', Controller.Brewery.updateBrewery);
  *       200:
  *         description: Brewery deleted successfully.
  */
-router.delete('/delete/:id', Controller.Brewery.deleteBrewery);
+router.delete('/delete/:id', checkJwt, Controller.Brewery.deleteBrewery);
 
 module.exports = router;

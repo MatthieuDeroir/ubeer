@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Controller = require('../controllers/');
-const { ensureAdmin } = require('../middlewares/admin')
+const checkJwt  = require('../middlewares/auth');
 
 /**
  * @swagger
@@ -99,7 +99,7 @@ router.get('/get/:id', Controller.Format.getFormatById);
  *       201:
  *         description: Format created successfully.
  */
-router.post('/post', Controller.Format.createFormat);
+router.post('/post', checkJwt, Controller.Format.createFormat);
 
 /**
  * @swagger
@@ -124,7 +124,7 @@ router.post('/post', Controller.Format.createFormat);
  *       200:
  *         description: Format updated successfully.
  */
-router.put('/put/:id', Controller.Format.updateFormat);
+router.put('/put/:id', checkJwt, Controller.Format.updateFormat);
 
 /**
  * @swagger
@@ -143,6 +143,6 @@ router.put('/put/:id', Controller.Format.updateFormat);
  *       200:
  *         description: Format deleted successfully.
  */
-router.delete('/delete/:id', Controller.Format.deleteFormat);
+router.delete('/delete/:id', checkJwt, Controller.Format.deleteFormat);
 
 module.exports = router;

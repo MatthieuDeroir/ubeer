@@ -46,13 +46,13 @@ const ensureUserExists = async (req, res, next) => {
 
 // Route pour obtenir le profil de l'utilisateur
 router.get('/profile', checkJwt, ensureUserExists, async (req, res) => {
-    // try {
+    try {
         console.log(`Fetching profile for user OAuth ID: ${req.userRecord.oauthId}`);
         res.json(req.userRecord);
-    // } catch (error) {
-        // console.error("Error in /profile route:", error);
-        // res.status(500).send("Failed to fetch user profile");
-    // }
+    } catch (error) {
+        console.error("Error in /profile route:", error);
+        res.status(500).send("Failed to fetch user profile");
+    }
 });
 // Route to get the current user's cart
 router.get('/cart', checkJwt, ensureUserExists, async (req, res) => {
