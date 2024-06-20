@@ -1,28 +1,35 @@
 const amqp = require('amqplib');
 require("dotenv").config();
 const { handleCommand } = require('./commandHandlers');
-const { connectMongo } = require('../../db/mongoDBConnect');
 
 async function startWorker() {
     try {
-        await connectMongo(); // Ensure MongoDB is connected
-        const conn = await amqp.connect(process.env.RABBITMQ_URL || 'amqp://localhost');
+        console.log("Connecting to RabbitMQ...");
+        const conn = await amqp.connect('amqp://rabbitmq:rabbitmq@rabbitmq-wily.onrender.com:443');
+        console.log("Connection successful, creating channel...");
         const channel = await conn.createChannel();
+        console.log("Channel created, asserting queue...");
         const queue = "beerQueue";
-
         await channel.assertQueue(queue, { durable: true });
-        console.log("Worker is waiting for commands");
-
+        console.log("Queue asserted, worker is waiting for commands");
+    
         channel.consume(queue, async function(msg) {
             if (msg !== null) {
+                console.log(`Message received: ${msg.content.toString()}`);
                 const command = msg.content.toString();
                 await handleCommand(command);
                 channel.ack(msg);
+                console.log("Message processed and acknowledged");
             }
         });
     } catch (error) {
-        console.error("Failed to start worker:", error);
+        console.error("Failed to start worker: ", error.message);
+        console.log("Stack Trace:", error.stack);
+        if (error.code) {
+            console.log("Error Code:", error.code);
+        }
     }
+    
 }
 
 module.exports = { startWorker };
