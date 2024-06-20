@@ -4,7 +4,7 @@ require("dotenv").config();
 let channel, connection;
 
 const connect = async () => {
-    connection = await amqp.connect(process.env.RABBITMQ_URL || 'amqp://rabbitmq:rabbitmq@rabbitmq-wily.onrender.com:5672');
+    connection = await amqp.connect(process.env.RABBITMQ_URL || 'amqp://localhost');
     channel = await connection.createChannel();
     await channel.assertQueue('beerQueue', { durable: true });
 };
