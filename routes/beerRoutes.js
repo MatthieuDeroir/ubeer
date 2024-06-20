@@ -52,6 +52,7 @@ const { ensureAdmin } = require('../middlewares/admin');
  *         type: Beer
  *         abv: 5.0
  *         ibu: 20
+ *         price: 5
  *         description: A smooth and refreshing lager
  *         imageUrl: https://dummyimage.com/200x400/000/fff
  *         breweryId: 1
