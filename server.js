@@ -26,6 +26,7 @@ app.use('/api/brewery/', routes.breweryRoutes);
 app.use('/api/format/', routes.formatRoutes);
 app.use('/api/user/', routes.userRoutes); // 
 
+
 const startServer = async () => {
     try {
         await connectMongo();
@@ -44,16 +45,16 @@ app.get("/", (req, res) => {
     res.send("Hello World");
 });
 
-// New route to send messages to RabbitMQ
-app.post("/send", async (req, res) => {
-    const { message } = req.body;
-    try {
-        await publishMessage(message);
-        res.status(200).send("Message sent successfully");
-    } catch (error) {
-        res.status(500).send("Failed to send message");
-    }
-});
+// // New route to send messages to RabbitMQ
+// app.post("/send", async (req, res) => {
+//     const { message } = req.body;
+//     try {
+//         await publishMessage(message);
+//         res.status(200).send("Message sent successfully");
+//     } catch (error) {
+//         res.status(500).send("Failed to send message");
+//     }
+// });
 
 // OAuth2 routes
 app.get('/auth/oauth2', passport.authenticate('oauth2'));
