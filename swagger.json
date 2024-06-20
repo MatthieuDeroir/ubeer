@@ -539,7 +539,48 @@
           "volume": 500,
           "unit": "ml"
         }
+      },
+      "Cart": {
+  "type": "object",
+  "required": ["userId", "items", "price"],
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "The ID of the user"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "beerId": {
+            "type": "string",
+            "description": "The ID of the beer"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "The quantity of the beer"
+          }
+        }
       }
+    },
+    "price": {
+      "type": "number",
+      "description": "The total price of the cart"
+    }
+  },
+  "example": {
+    "userId": "user123",
+    "items": [
+      {
+        "beerId": "beer123",
+        "quantity": 2
+      }
+    ],
+    "price": 15.0
+  }
+}
+
     }
   },
   "tags": [
