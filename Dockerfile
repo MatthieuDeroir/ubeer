@@ -1,9 +1,23 @@
-FROM rabbitmq:3.8.0-management
+# Use an official Node runtime as a parent image
+FROM node:14
 
-COPY rabbitmq.conf /etc/rabbitmq/
+# Set the working directory
+WORKDIR /usr/src/app
 
-ENV RABBITMQ_NODENAME=rabbit@localhost
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-RUN chown rabbitmq:rabbitmq /etc/rabbitmq/rabbitmq.conf
+# Install any needed packages
+RUN npm install
 
-USER rabbitmq:rabbitmq
+# Bundle app source inside the Docker image
+COPY . .
+
+# Make port 4000 available to the world outside this container
+EXPOSE 4000
+
+# Define environment variable
+ENV RABBITMQ_URL amqp://rabbitmq:rabbitmq@rabbitmq-6i94:10000
+
+# Run the app when the container launches
+CMD ["node", "server.js"]

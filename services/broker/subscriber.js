@@ -5,7 +5,7 @@ const { handleCommand } = require('./commandHandlers');
 async function startWorker() {
     try {
         console.log("Connecting to RabbitMQ...");
-        const conn = await amqp.connect('amqp://localhost');
+        const conn = await amqp.connect('amqp://rabbitmq:rabbitmq@rabbitmq-6i94:10000');
         console.log("Connection successful, creating channel...");
         const channel = await conn.createChannel();
         console.log("Channel created, asserting queue...");
