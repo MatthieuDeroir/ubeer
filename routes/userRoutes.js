@@ -9,42 +9,63 @@ const Beer = Models.Mongo.Beer; // Import the Beer model
 
 // Middleware pour vérifier si l'utilisateur existe
 const ensureUserExists = async (req, res, next) => {
-    // try {
-        const oauthId = req.user.sub;
-        let user = await User.findOne({ where: { oauthId } });
+    const oauthId = req.user.sub;
+    let user = await User.findOne({ where: { oauthId } });
 
-        if (!user) {
-            const name = req.user.name || req.user.nickname || 'Default Name';
-            // const email = req.user.email || 'default@example.com';
-            user = await User.create({
-                username: name,
-                // email: email,
-                oauthId: oauthId,
-                address: 'default address'
-            });
-        }
+    if (!user) {
+        const name = req.user.name || req.user.nickname || 'Default Name';
+        user = await User.create({
+            username: name,
+            oauthId: oauthId,
+            address: 'default address'
+        });
+    }
 
-        // Vérifier si l'utilisateur a un panier, sinon créer un nouveau panier
-        let cart = await Cart.findOne({ userId: oauthId });
-        if (!cart) {
-            cart = new Cart({
-                userId: oauthId,
-                items: [],
-                price: 0
-            });
-            await cart.save();
-        }
+    // Vérifier si l'utilisateur a un panier, sinon créer un nouveau panier
+    let cart = await Cart.findOne({ userId: oauthId });
+    if (!cart) {
+        cart = new Cart({
+            userId: oauthId,
+            items: [],
+            price: 0
+        });
+        await cart.save();
+    }
 
-        req.userRecord = user;
-        req.cartRecord = cart;
- 
-        next();
-    // } catch (error) {
-    //     res.status(500).send("Failed to ensure user exists or create cart");
-    // }
+    req.userRecord = user;
+    req.cartRecord = cart;
+
+    next();
 };
 
-// Route pour obtenir le profil de l'utilisateur
+/**
+ * @swagger
+ * tags:
+ *   - name: User
+ *     description: User operations
+ */
+
+/**
+ * @swagger
+ * /api/user/profile:
+ *   get:
+ *     summary: Get the user's profile
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 username:
+ *                   type: string
+ *                 oauthId:
+ *                   type: string
+ *                 address:
+ *                   type: string
+ */
 router.get('/profile', checkJwt, ensureUserExists, async (req, res) => {
     try {
         console.log(`Fetching profile for user OAuth ID: ${req.userRecord.oauthId}`);
@@ -54,7 +75,42 @@ router.get('/profile', checkJwt, ensureUserExists, async (req, res) => {
         res.status(500).send("Failed to fetch user profile");
     }
 });
-// Route to get the current user's cart
+
+/**
+ * @swagger
+ * tags:
+ *   - name: Cart
+ *     description: Cart operations
+ */
+
+/**
+ * @swagger
+ * /api/user/cart:
+ *   get:
+ *     summary: Get the current user's cart
+ *     tags: [Cart]
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 userId:
+ *                   type: string
+ *                 items:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       beerId:
+ *                         type: string
+ *                       quantity:
+ *                         type: integer
+ *                 price:
+ *                   type: number
+ */
 router.get('/cart', checkJwt, ensureUserExists, async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: req.userRecord.id }).populate('items.beerId');
@@ -65,7 +121,31 @@ router.get('/cart', checkJwt, ensureUserExists, async (req, res) => {
     }
 });
 
-// Route to add an item to the cart
+/**
+ * @swagger
+ * /api/user/cart:
+ *   post:
+ *     summary: Add an item to the cart
+ *     tags: [Cart]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               beerId:
+ *                 type: string
+ *               quantity:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Cart'
+ */
 router.post('/cart', checkJwt, ensureUserExists, async (req, res) => {
     try {
         const { beerId, quantity } = req.body;
@@ -99,7 +179,31 @@ router.post('/cart', checkJwt, ensureUserExists, async (req, res) => {
     }
 });
 
-// Route to update the quantity of an item in the cart
+/**
+ * @swagger
+ * /api/user/cart:
+ *   patch:
+ *     summary: Update the quantity of an item in the cart
+ *     tags: [Cart]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               beerId:
+ *                 type: string
+ *               quantity:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Cart'
+ */
 router.patch('/cart', checkJwt, ensureUserExists, async (req, res) => {
     try {
       const { beerId, quantity } = req.body;
@@ -124,7 +228,29 @@ router.patch('/cart', checkJwt, ensureUserExists, async (req, res) => {
     }
   });
   
-// Route to remove an item from the cart
+/**
+ * @swagger
+ * /api/user/cart:
+ *   delete:
+ *     summary: Remove an item from the cart
+ *     tags: [Cart]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               beerId:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Cart'
+ */
 router.delete('/cart', checkJwt, ensureUserExists, async (req, res) => {
     try {
       const { beerId } = req.body;
@@ -141,6 +267,5 @@ router.delete('/cart', checkJwt, ensureUserExists, async (req, res) => {
       res.status(500).send("Failed to remove item from cart");
     }
   });
-  
 
 module.exports = router;
